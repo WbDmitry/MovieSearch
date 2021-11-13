@@ -10,7 +10,8 @@ import com.wbdmitry.moviesearch.model.Movie
 import kotlinx.android.synthetic.main.fragment_movie_info.*
 
 class MovieInfoFragment : Fragment() {
-    private var binding: FragmentMovieInfoBinding? = null
+    private var _binding: FragmentMovieInfoBinding? = null
+    private val binding get() = _binding!!
 
     companion object {
         const val BUNDLE_EXTRA = "movie"
@@ -26,8 +27,8 @@ class MovieInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMovieInfoBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentMovieInfoBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,6 +43,6 @@ class MovieInfoFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
 }
