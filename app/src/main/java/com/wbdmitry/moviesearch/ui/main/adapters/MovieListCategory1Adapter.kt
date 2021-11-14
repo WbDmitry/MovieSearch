@@ -28,18 +28,15 @@ class MovieListCategory1Adapter(private val onItemViewClickListener: MovieListFr
         return MovieListHolder(binding.root)
     }
 
-    override fun onBindViewHolder(holder: MovieListHolder, position: Int) {
+    override fun onBindViewHolder(holder: MovieListHolder, position: Int) =
         holder.bind(movieData[position])
-    }
 
-    override fun getItemCount(): Int {
-        return movieData.size
-    }
+    override fun getItemCount(): Int = movieData.size
 
     inner class MovieListHolder(item: View) : RecyclerView.ViewHolder(item) {
         fun bind(movie: Movie) = with(binding) {
-            binding.itemPosterMovieImageView.setImageResource(movie.poster)
-            binding.itemNameMovieTextView.text = movie.title
+            itemPosterMovieImageView.setImageResource(movie.poster)
+            itemNameMovieTextView.text = movie.title
             itemCardView.setOnClickListener {
                 onItemViewClickListener.inItemViewClick(movie)
             }
