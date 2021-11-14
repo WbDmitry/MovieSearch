@@ -5,16 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.wbdmitry.moviesearch.R
 import com.wbdmitry.moviesearch.databinding.FragmentMovieListBinding
-import com.wbdmitry.moviesearch.model.Movie
+import com.wbdmitry.moviesearch.model.AppState
+import com.wbdmitry.moviesearch.model.entity.Movie
 import com.wbdmitry.moviesearch.ui.main.adapters.MovieListCategory1Adapter
 import com.wbdmitry.moviesearch.ui.main.adapters.MovieListCategory2Adapter
 import com.wbdmitry.moviesearch.ui.main.movieInfo.MovieInfoFragment
 
 class MovieListFragment : Fragment() {
     private lateinit var binding: FragmentMovieListBinding
+    private lateinit var viewModel: MovieListViewModel
 
     private val onListItemClickListener = object : OnItemViewClickListener {
         override fun inItemViewClick(movie: Movie) {
@@ -37,20 +41,46 @@ class MovieListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMovieListBinding.inflate(inflater, container, false)
-        initRecyclerView()
         return binding.root
     }
 
-    private fun initRecyclerView() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.category1RecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.category1RecyclerView.adapter = adapterCategory1
-        adapterCategory1.movieListCategory1
 
         binding.category2RecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.category2RecyclerView.adapter = adapterCategory2
-        adapterCategory2.movieListCategory2
+
+        viewModel = ViewModelProvider(this)[MovieListViewModel::class.java]
+        viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
+        viewModel.getData()
+    }
+
+    private fun renderData(appState: AppState) {
+        when (appState) {
+            is AppState.Success -> {
+                binding.mainFragmentLoadingLayout.visibility = View.GONE
+                adapterCategory1.setMovies(appState.movieCategory1)
+                adapterCategory2.setMovies(appState.movieCategory2)
+            }
+            is AppState.Loading -> {
+                binding.mainFragmentLoadingLayout.visibility = View.VISIBLE
+            }
+            is AppState.Error -> {
+                binding.mainFragmentLoadingLayout.visibility = View.GONE
+                Snackbar
+                    .make(
+                        binding.nameCategory1TextView,
+                        getString(R.string.error),
+                        Snackbar.LENGTH_INDEFINITE
+                    )
+                    .setAction(getString(R.string.reload)) { viewModel.getData() }
+                    .show()
+            }
+        }
     }
 
     interface OnItemViewClickListener {
