@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.wbdmitry.moviesearch.databinding.FragmentMovieInfoBinding
-import com.wbdmitry.moviesearch.model.Movie
+import com.wbdmitry.moviesearch.model.entity.Movie
 import kotlinx.android.synthetic.main.fragment_movie_info.*
 
 class MovieInfoFragment : Fragment() {
