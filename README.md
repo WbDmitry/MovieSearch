@@ -20,6 +20,10 @@
 
 Рефакторинг приложения, Создание ViewModel для фрагмента MovieListFragment, добавление AppState, Repository и LiveData
 
+### 14.11.2021 (lesson-4)
+
+Рефакторинг приложения
+
 
 
 # Исправленные баги:
