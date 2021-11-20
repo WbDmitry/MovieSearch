@@ -71,16 +71,24 @@ class MovieListFragment : Fragment() {
             }
             is AppState.Error -> {
                 binding.mainFragmentLoadingLayout.visibility = View.GONE
-                Snackbar
-                    .make(
-                        binding.nameCategory1TextView,
-                        getString(R.string.error),
-                        Snackbar.LENGTH_INDEFINITE
+                appState.error.localizedMessage?.let {
+                    binding.mainContainerConstrainLayout.showErrorSnackBar(
+                        it,
+                        getString(R.string.reload)
                     )
-                    .setAction(getString(R.string.reload)) { viewModel.getData() }
-                    .show()
+                }
             }
         }
+    }
+
+    private fun View.showErrorSnackBar(
+        text: String,
+        actionText: String,
+        length: Int = Snackbar.LENGTH_INDEFINITE
+    ) {
+        Snackbar.make(this, text, length)
+            .setAction(actionText) { viewModel.getData() }
+            .show()
     }
 
     interface OnItemViewClickListener {

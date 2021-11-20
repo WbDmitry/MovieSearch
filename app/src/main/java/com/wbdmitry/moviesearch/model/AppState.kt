@@ -7,5 +7,6 @@ sealed class AppState {
         AppState()
 
     data class Error(val error: Throwable) : AppState()
+
     object Loading : AppState()
 }

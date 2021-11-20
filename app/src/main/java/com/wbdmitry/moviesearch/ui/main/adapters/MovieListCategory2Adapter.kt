@@ -28,13 +28,10 @@ class MovieListCategory2Adapter(private val onItemViewClickListener: MovieListFr
         return MovieListHolder(binding.root)
     }
 
-    override fun onBindViewHolder(holder: MovieListHolder, position: Int) {
+    override fun onBindViewHolder(holder: MovieListHolder, position: Int) =
         holder.bind(movieData[position])
-    }
 
-    override fun getItemCount(): Int {
-        return movieData.size
-    }
+    override fun getItemCount(): Int = movieData.size
 
     inner class MovieListHolder(item: View) : RecyclerView.ViewHolder(item) {
         fun bind(movie: Movie) = with(binding) {
