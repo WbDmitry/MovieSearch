@@ -20,6 +20,7 @@ class MovieListFragment : Fragment() {
     private lateinit var binding: FragmentMovieListBinding
     private lateinit var viewModel: MovieListViewModel
 
+
     private val onListItemClickListener = object : OnItemViewClickListener {
         override fun inItemViewClick(movie: Movie) {
             activity?.supportFragmentManager?.let {

@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.wbdmitry.moviesearch.model.AppState
 import com.wbdmitry.moviesearch.model.repository.Repository
 import com.wbdmitry.moviesearch.model.repository.RepositoryImpl
-import java.lang.Thread.sleep
-import kotlin.random.Random
 
 class MovieListViewModel(private val repository: Repository = RepositoryImpl()) : ViewModel(),
     LifecycleObserver {
@@ -19,13 +17,12 @@ class MovieListViewModel(private val repository: Repository = RepositoryImpl()) 
     private fun getNewDataFromLocalSource() {
         liveDataToObserve.value = AppState.Loading
         Thread {
-            sleep(MovieListViewModelConstants.SLEEPING_TIME.toLong())
             try {
-                when (Random.nextInt(MovieListViewModelConstants.RANDOM_VALUE)) {
+                when (0) {
                     0 -> liveDataToObserve.postValue(
                         AppState.Success(
-                            repository.getMoviesFromLocalStorageCategory1(),
-                            repository.getMoviesFromLocalStorageCategory2()
+                            repository.getMoviesCategory1FromServer(),
+                            repository.getMoviesCategory2FromServer(),
                         )
                     )
                     1 -> throw Exception("Нет соединения с сервером!")
@@ -39,10 +36,5 @@ class MovieListViewModel(private val repository: Repository = RepositoryImpl()) 
                 )
             }
         }.start()
-    }
-
-    object MovieListViewModelConstants {
-        const val SLEEPING_TIME = 2000
-        const val RANDOM_VALUE = 2
     }
 }
