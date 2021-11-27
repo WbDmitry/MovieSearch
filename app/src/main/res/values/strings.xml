@@ -9,4 +9,6 @@
     <string name="reload">Перезагрузить</string>
     <string name="message_from_system">Сообщение от симтемы\n</string>
     <string name="action">Действие:</string>
+    <string name="user_logged">(ENTER) The user has logged into the application -</string>
+    <string name="user_exit">(EXIT) The user has logged out of the application - </string>
 </resources>
