@@ -28,8 +28,8 @@
 
             <ImageView
                 android:id="@+id/item_poster_movie_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/width_poster_item_movie"
+                android:layout_height="@dimen/height_poster_item_movie"
                 android:layout_marginEnd="@dimen/margin_16"
                 tools:srcCompat="@tools:sample/avatars" />
 

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import coil.load
 import com.wbdmitry.moviesearch.R
 import com.wbdmitry.moviesearch.databinding.FragmentMovieInfoBinding
 import com.wbdmitry.moviesearch.model.AppState
@@ -58,11 +59,7 @@ class MovieInfoFragment : Fragment() {
                 movieInfoFragmentLoadingLayout.visibility = View.VISIBLE
             is AppState.Success -> {
                 movieInfoFragmentLoadingLayout.visibility = View.GONE
-                val posterImageUri: Uri = Uri.parse(
-                    "android.resource://com.wbdmitry.moviesearch/" + R.drawable.ic_launcher_foreground
-                )
-                headerPosterMovieInfoImageView.setImageURI(posterImageUri)
-                miniPosterMovieInfoImageView.setImageURI(posterImageUri)
+                miniPosterMovieInfoImageView.load("https://image.tmdb.org/t/p/original" + appState.movieData.first().poster_path)
                 titleMovieInfoTextView.text = appState.movieData.first().title
                 descriptionMovieTextView.text = appState.movieData.first().overview
             }

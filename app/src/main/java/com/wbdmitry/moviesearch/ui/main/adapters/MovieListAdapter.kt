@@ -1,12 +1,11 @@
 package com.wbdmitry.moviesearch.ui.main.adapters
 
 import android.annotation.SuppressLint
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.wbdmitry.moviesearch.R
+import coil.load
 import com.wbdmitry.moviesearch.databinding.FragmentItemMovieListBinding
 import com.wbdmitry.moviesearch.model.entity.Movie
 import com.wbdmitry.moviesearch.ui.main.movielist.MovieListFragment
@@ -39,9 +38,7 @@ class MovieListAdapter(private val onItemViewClickListener: MovieListFragment.On
 
     inner class MovieListHolder(item: View) : RecyclerView.ViewHolder(item) {
         fun bind(movie: Movie) = with(binding) {
-            val posterImageUri: Uri =
-                Uri.parse("android.resource://com.wbdmitry.moviesearch/" + R.drawable.ic_launcher_background)
-            itemPosterMovieImageView.setImageURI(posterImageUri)
+            itemPosterMovieImageView.load("https://image.tmdb.org/t/p/original" + movie.poster_path)
             itemNameMovieTextView.text = movie.title
             itemCardView.setOnClickListener {
                 onItemViewClickListener?.inItemViewClick(movie)
