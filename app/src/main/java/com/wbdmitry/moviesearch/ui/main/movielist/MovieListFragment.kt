@@ -4,38 +4,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.wbdmitry.moviesearch.R
 import com.wbdmitry.moviesearch.databinding.FragmentMovieListBinding
 import com.wbdmitry.moviesearch.model.AppState
 import com.wbdmitry.moviesearch.model.entity.Movie
-import com.wbdmitry.moviesearch.ui.main.adapters.MovieListCategory1Adapter
-import com.wbdmitry.moviesearch.ui.main.adapters.MovieListCategory2Adapter
+import com.wbdmitry.moviesearch.model.repository.RepositoryImpl
+import com.wbdmitry.moviesearch.model.repository.retrofit.RemoteDataSource
+import com.wbdmitry.moviesearch.ui.main.adapters.MovieListAdapter
 import com.wbdmitry.moviesearch.ui.main.movieInfo.MovieInfoFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class MovieListFragment : Fragment() {
     private lateinit var binding: FragmentMovieListBinding
-    private lateinit var viewModel: MovieListViewModel
-
-
-    private val onListItemClickListener = object : OnItemViewClickListener {
-        override fun inItemViewClick(movie: Movie) {
-            activity?.supportFragmentManager?.let {
-                val bundle = Bundle()
-                bundle.putParcelable(MovieInfoFragment.BUNDLE_EXTRA, movie)
-                it.beginTransaction()
-                    .add(R.id.main_container, MovieInfoFragment.newInstance(bundle))
-                    .addToBackStack("")
-                    .commitAllowingStateLoss()
-            }
-        }
+    private val viewModel: MovieListViewModel by viewModel {
+        parametersOf(RepositoryImpl(RemoteDataSource()))
     }
-
-    private val adapterCategory1 = MovieListCategory1Adapter(onListItemClickListener)
-    private val adapterCategory2 = MovieListCategory2Adapter(onListItemClickListener)
+    private var adapter: MovieListAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,49 +34,41 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.category1RecyclerView.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.category1RecyclerView.adapter = adapterCategory1
-
-        binding.category2RecyclerView.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.category2RecyclerView.adapter = adapterCategory2
-
-        viewModel = ViewModelProvider(this)[MovieListViewModel::class.java]
-        viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
-        viewModel.getData()
+        binding.movieListRecyclerView.adapter = adapter
+        viewModel.liveData.observe(viewLifecycleOwner, { renderData(it) })
+        viewModel.getNewDataFromServer()
     }
 
-    private fun renderData(appState: AppState) {
+    private fun renderData(appState: AppState) = with(binding) {
         when (appState) {
+            is AppState.Loading ->
+                movieListFragmentLoadingLayout.visibility = View.VISIBLE
             is AppState.Success -> {
-                binding.mainFragmentLoadingLayout.visibility = View.GONE
-                adapterCategory1.setMovies(appState.movieCategory1)
-                adapterCategory2.setMovies(appState.movieCategory2)
-            }
-            is AppState.Loading -> {
-                binding.mainFragmentLoadingLayout.visibility = View.VISIBLE
+                movieListFragmentLoadingLayout.visibility = View.GONE
+                adapter = MovieListAdapter(object : OnItemViewClickListener {
+                    override fun inItemViewClick(movie: Movie) {
+                        val fragmentManager = activity?.supportFragmentManager
+                        fragmentManager?.let { manager ->
+                            val bundle = Bundle().apply {
+                                putInt(MovieInfoFragment.BUNDLE_EXTRA, movie.id)
+                            }
+                            manager.beginTransaction()
+                                .add(R.id.main_container, MovieInfoFragment.newInstance(bundle))
+                                .addToBackStack("")
+                                .commitAllowingStateLoss()
+                        }
+                    }
+                }
+                ).apply {
+                    setMovies(appState.movieData)
+                }
+                movieListRecyclerView.adapter = adapter
             }
             is AppState.Error -> {
-                binding.mainFragmentLoadingLayout.visibility = View.GONE
-                appState.error.localizedMessage?.let {
-                    binding.mainContainerConstrainLayout.showErrorSnackBar(
-                        it,
-                        getString(R.string.reload)
-                    )
-                }
+                movieListFragmentLoadingLayout.visibility = View.GONE
+                Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    private fun View.showErrorSnackBar(
-        text: String,
-        actionText: String,
-        length: Int = Snackbar.LENGTH_INDEFINITE
-    ) {
-        Snackbar.make(this, text, length)
-            .setAction(actionText) { viewModel.getData() }
-            .show()
     }
 
     interface OnItemViewClickListener {
