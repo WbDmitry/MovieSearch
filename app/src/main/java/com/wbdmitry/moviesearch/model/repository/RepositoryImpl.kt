@@ -1,44 +1,20 @@
 package com.wbdmitry.moviesearch.model.repository
 
-import com.wbdmitry.moviesearch.model.MovieLoader
 import com.wbdmitry.moviesearch.model.entity.Movie
+import com.wbdmitry.moviesearch.model.entity.MovieList
+import com.wbdmitry.moviesearch.model.repository.retrofit.RemoteDataSource
+import retrofit2.Callback
 
-class RepositoryImpl : Repository {
-    override fun getMoviesFromServer(id: Int): Movie {
-        val dto = MovieLoader.loadMovie(id)
-        return Movie(
-            id = dto?.id ?: 0,
-            poster = dto?.poster_path ?: "",
-            title = dto?.title ?: "",
-            description = dto?.overview ?: "",
-        )
+class RepositoryImpl(private val remoteDataSource: RemoteDataSource) : Repository {
+
+    override fun getMovieListFromServer(callback: Callback<MovieList>) {
+        remoteDataSource.getMovieList(callback)
     }
 
-    override fun getMoviesCategory1FromServer(): List<Movie> {
-        val dto = MovieLoader.loadListMoviesCategory1()
-        val listMovies = mutableListOf<Movie>()
-        dto?.results?.forEach {
-            listMovies += Movie(
-                id = it.id,
-                poster = it.poster_path,
-                title = it.title,
-                description = it.overview,
-            )
-        }
-        return listMovies
-    }
-
-    override fun getMoviesCategory2FromServer(): List<Movie> {
-        val dto = MovieLoader.loadListMoviesCategory2()
-        val listMovies = mutableListOf<Movie>()
-        dto?.results?.forEach {
-            listMovies += Movie(
-                id = it.id,
-                poster = it.poster_path,
-                title = it.title,
-                description = it.overview,
-            )
-        }
-        return listMovies
+    override fun getMovieInfoFromServer(
+        id: Int,
+        callback: Callback<Movie>
+    ) {
+        remoteDataSource.getMovieInfo(id, callback)
     }
 }

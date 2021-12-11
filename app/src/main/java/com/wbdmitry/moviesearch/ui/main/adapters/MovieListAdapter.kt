@@ -1,18 +1,17 @@
 package com.wbdmitry.moviesearch.ui.main.adapters
 
 import android.annotation.SuppressLint
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.wbdmitry.moviesearch.R
+import coil.load
 import com.wbdmitry.moviesearch.databinding.FragmentItemMovieListBinding
 import com.wbdmitry.moviesearch.model.entity.Movie
 import com.wbdmitry.moviesearch.ui.main.movielist.MovieListFragment
 
-class MovieListCategory2Adapter(private val onItemViewClickListener: MovieListFragment.OnItemViewClickListener) :
-    RecyclerView.Adapter<MovieListCategory2Adapter.MovieListHolder>() {
+class MovieListAdapter(private val onItemViewClickListener: MovieListFragment.OnItemViewClickListener?) :
+    RecyclerView.Adapter<MovieListAdapter.MovieListHolder>() {
 
     private lateinit var binding: FragmentItemMovieListBinding
     private var movieData: List<Movie> = listOf()
@@ -30,19 +29,19 @@ class MovieListCategory2Adapter(private val onItemViewClickListener: MovieListFr
         return MovieListHolder(binding.root)
     }
 
-    override fun onBindViewHolder(holder: MovieListHolder, position: Int) =
+    override fun onBindViewHolder(holder: MovieListHolder, position: Int) {
         holder.bind(movieData[position])
+        holder.setIsRecyclable(false)
+    }
 
     override fun getItemCount(): Int = movieData.size
 
     inner class MovieListHolder(item: View) : RecyclerView.ViewHolder(item) {
         fun bind(movie: Movie) = with(binding) {
-            val posterImageUri: Uri =
-                Uri.parse("android.resource://com.wbdmitry.moviesearch/" + R.drawable.ic_launcher_foreground)
-            itemPosterMovieImageView.setImageURI(posterImageUri)
+            itemPosterMovieImageView.load("https://image.tmdb.org/t/p/original" + movie.poster_path)
             itemNameMovieTextView.text = movie.title
             itemCardView.setOnClickListener {
-                onItemViewClickListener.inItemViewClick(movie)
+                onItemViewClickListener?.inItemViewClick(movie)
             }
         }
     }
