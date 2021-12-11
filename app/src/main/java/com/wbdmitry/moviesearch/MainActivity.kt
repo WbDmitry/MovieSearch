@@ -4,9 +4,12 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.wbdmitry.moviesearch.databinding.ActivityMainBinding
 import com.wbdmitry.moviesearch.ui.main.movielist.MovieListFragment
+import com.wbdmitry.moviesearch.ui.main.sittings.SettingsFragment
 
 const val NAME_LOG_EVENT = "logEvent"
 const val NAME_EVENT = "event"
@@ -23,15 +26,35 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         savedInstanceState ?: run {
-            supportFragmentManager
-                .beginTransaction()
-                .replace(
-                    R.id.main_container,
-                    MovieListFragment.newInstance()
-                ).commit()
+            openFragment(MovieListFragment.newInstance())
         }
+
         registerReceiver(receiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
         startEventLog(intentMyIntentService, getString(R.string.user_logged))
+
+        binding.menuMovieList.setOnNavigationItemSelectedListener {
+            clickMenuItem(it)
+            true
+        }
+    }
+
+    private fun clickMenuItem(item: MenuItem) {
+        when (item.itemId) {
+            R.id.setting_movie_list -> {
+                openFragment(SettingsFragment.newInstance())
+            }
+            R.id.movie_list -> {
+                openFragment(MovieListFragment.newInstance())
+            }
+        }
+    }
+
+    private fun openFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(
+                R.id.main_container,
+                fragment
+            ).commit()
     }
 
     private fun startEventLog(intent: Intent, event: String) {
