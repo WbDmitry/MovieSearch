@@ -1,5 +1,6 @@
 package com.wbdmitry.moviesearch
 
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         savedInstanceState ?: run {
             openFragment(MovieListFragment.newInstance())
         }
+        initSetting()
 
         registerReceiver(receiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
         startEventLog(intentMyIntentService, getString(R.string.user_logged))
@@ -36,6 +38,17 @@ class MainActivity : AppCompatActivity() {
             clickMenuItem(it)
             true
         }
+    }
+
+    private fun saveSetting() {
+        getPreferences(Context.MODE_PRIVATE)?.edit()
+            ?.putBoolean(AppSetting.PREF_NAME, AppSetting.adultCheckBoxCondition)
+            ?.apply()
+    }
+
+    private fun initSetting() {
+        AppSetting.adultCheckBoxCondition = getPreferences(Context.MODE_PRIVATE)
+            ?.getBoolean(AppSetting.PREF_NAME, false) ?: false
     }
 
     private fun clickMenuItem(item: MenuItem) {
@@ -64,6 +77,11 @@ class MainActivity : AppCompatActivity() {
                 event
             )
         )
+    }
+
+    override fun onStop() {
+        saveSetting()
+        super.onStop()
     }
 
     override fun onDestroy() {

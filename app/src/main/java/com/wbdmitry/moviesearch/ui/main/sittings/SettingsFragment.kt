@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.wbdmitry.moviesearch.AppSetting
 import com.wbdmitry.moviesearch.databinding.SettingsFragmentBinding
 
 class SettingsFragment : Fragment() {
@@ -14,8 +15,6 @@ class SettingsFragment : Fragment() {
         fun newInstance() = SettingsFragment()
     }
 
-//    private val viewModel: SettingsViewModel by viewModel()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -24,4 +23,15 @@ class SettingsFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        renderData()
+    }
+
+    private fun renderData() {
+        binding.adultCheckBox.isChecked = AppSetting.adultCheckBoxCondition
+        binding.adultCheckBox.setOnClickListener {
+            AppSetting.adultCheckBoxCondition = binding.adultCheckBox.isChecked
+        }
+    }
 }
