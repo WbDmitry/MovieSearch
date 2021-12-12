@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         savedInstanceState ?: run {
             openFragment(MovieListFragment.newInstance())
         }
+
         initSetting()
 
         registerReceiver(receiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))

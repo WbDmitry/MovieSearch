@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.wbdmitry.moviesearch.AppSetting
 import com.wbdmitry.moviesearch.R
 import com.wbdmitry.moviesearch.databinding.FragmentMovieListBinding
 import com.wbdmitry.moviesearch.model.AppState
@@ -60,7 +61,11 @@ class MovieListFragment : Fragment() {
                     }
                 }
                 ).apply {
-                    setMovies(appState.movieData)
+                    setMovies(if (AppSetting.adultCheckBoxCondition) {
+                        appState.movieData.filter { it.adult }
+                    } else {
+                        appState.movieData
+                    })
                 }
                 movieListRecyclerView.adapter = adapter
             }
