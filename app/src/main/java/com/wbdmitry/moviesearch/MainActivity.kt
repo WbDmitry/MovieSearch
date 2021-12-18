@@ -9,6 +9,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.wbdmitry.moviesearch.databinding.ActivityMainBinding
+import com.wbdmitry.moviesearch.ui.main.history.HistoryFragment
 import com.wbdmitry.moviesearch.ui.main.movielist.MovieListFragment
 import com.wbdmitry.moviesearch.ui.main.sittings.SettingsFragment
 
@@ -59,6 +60,9 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.movie_list -> {
                 openFragment(MovieListFragment.newInstance())
+            }
+            R.id.history_movie_list -> {
+                openFragment(HistoryFragment.newInstance())
             }
         }
     }

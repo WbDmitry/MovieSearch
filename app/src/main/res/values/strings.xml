@@ -15,4 +15,6 @@
     <string name="movie_list_settings">Настройки списка фильмов:</string>
     <string name="setting">Настройки</string>
     <string name="movie">Фильмы</string>
+    <string name="empty_date">13/02/2021</string>
+    <string name="history">История</string>
 </resources>

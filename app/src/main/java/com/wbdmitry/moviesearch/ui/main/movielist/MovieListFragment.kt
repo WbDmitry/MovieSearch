@@ -15,10 +15,12 @@ import com.wbdmitry.moviesearch.model.repository.RepositoryImpl
 import com.wbdmitry.moviesearch.model.repository.retrofit.RemoteDataSource
 import com.wbdmitry.moviesearch.ui.main.adapters.MovieListAdapter
 import com.wbdmitry.moviesearch.ui.main.movieInfo.MovieInfoFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class MovieListFragment : Fragment() {
+class MovieListFragment : Fragment(), CoroutineScope by MainScope() {
     private lateinit var binding: FragmentMovieListBinding
     private val viewModel: MovieListViewModel by viewModel {
         parametersOf(RepositoryImpl(RemoteDataSource()))
@@ -71,7 +73,12 @@ class MovieListFragment : Fragment() {
             }
             is AppState.Error -> {
                 movieListFragmentLoadingLayout.visibility = View.GONE
-                Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    R.string.error,
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
             }
         }
     }

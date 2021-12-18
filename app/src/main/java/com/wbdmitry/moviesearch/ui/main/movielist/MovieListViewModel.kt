@@ -9,18 +9,23 @@ import com.wbdmitry.moviesearch.model.repository.RepositoryImpl
 import com.wbdmitry.moviesearch.model.repository.retrofit.REQUEST_ERROR
 import com.wbdmitry.moviesearch.model.repository.retrofit.RemoteDataSource
 import com.wbdmitry.moviesearch.model.repository.retrofit.SERVER_ERROR
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MovieListViewModel(
     private val repository: RepositoryImpl = RepositoryImpl(RemoteDataSource()),
-) : ViewModel(), LifecycleObserver {
+) : ViewModel(), LifecycleObserver, CoroutineScope by MainScope() {
     val liveData: MutableLiveData<AppState> = MutableLiveData()
 
     fun getNewDataFromServer() {
-        liveData.value = AppState.Loading
-        repository.getMovieListFromServer(callback)
+        launch {
+            liveData.value = AppState.Loading
+            repository.getMovieListFromServer(callback)
+        }
     }
 
     private val callback = object :

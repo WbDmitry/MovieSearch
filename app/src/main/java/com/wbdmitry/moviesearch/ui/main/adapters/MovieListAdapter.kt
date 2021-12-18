@@ -10,8 +10,9 @@ import com.wbdmitry.moviesearch.databinding.FragmentItemMovieListBinding
 import com.wbdmitry.moviesearch.model.entity.Movie
 import com.wbdmitry.moviesearch.ui.main.movielist.MovieListFragment
 
-class MovieListAdapter(private val onItemViewClickListener: MovieListFragment.OnItemViewClickListener?) :
-    RecyclerView.Adapter<MovieListAdapter.MovieListHolder>() {
+class MovieListAdapter(
+    private val onItemViewClickListener: MovieListFragment.OnItemViewClickListener?
+) : RecyclerView.Adapter<MovieListAdapter.MovieListHolder>() {
 
     private lateinit var binding: FragmentItemMovieListBinding
     private var movieData: List<Movie> = listOf()
