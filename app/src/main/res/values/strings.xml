@@ -11,4 +11,10 @@
     <string name="action">Действие:</string>
     <string name="user_logged">(ENTER) The user has logged into the application -</string>
     <string name="user_exit">(EXIT) The user has logged out of the application - </string>
+    <string name="show_adult_content">Показывать взрослый контент</string>
+    <string name="movie_list_settings">Настройки списка фильмов:</string>
+    <string name="setting">Настройки</string>
+    <string name="movie">Фильмы</string>
+    <string name="empty_date">13/02/2021</string>
+    <string name="history">История</string>
 </resources>

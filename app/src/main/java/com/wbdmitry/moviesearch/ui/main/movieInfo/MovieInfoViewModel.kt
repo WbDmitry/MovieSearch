@@ -4,9 +4,9 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.wbdmitry.moviesearch.model.AppState
+import com.wbdmitry.moviesearch.model.entity.History
 import com.wbdmitry.moviesearch.model.entity.Movie
 import com.wbdmitry.moviesearch.model.repository.RepositoryImpl
-import com.wbdmitry.moviesearch.model.repository.retrofit.CORRUPTED_DATA
 import com.wbdmitry.moviesearch.model.repository.retrofit.REQUEST_ERROR
 import com.wbdmitry.moviesearch.model.repository.retrofit.RemoteDataSource
 import com.wbdmitry.moviesearch.model.repository.retrofit.SERVER_ERROR
@@ -41,11 +41,11 @@ class MovieInfoViewModel(
         }
 
         private fun checkResponse(serverResponse: Movie): AppState {
-            return if (serverResponse.title == null) {
-                AppState.Error(Throwable(CORRUPTED_DATA))
-            } else {
-                AppState.Success(listOf(serverResponse))
-            }
+            return AppState.Success(listOf(serverResponse))
         }
+    }
+
+    fun saveToHistory(history: History) {
+        repository.saveToHistory(history)
     }
 }
