@@ -17,4 +17,11 @@
     <string name="movie">Фильмы</string>
     <string name="empty_date">13/02/2021</string>
     <string name="history">История</string>
+    <string name="alert_dialog_title">Доступ к геолокации</string>
+    <string name="alert_dialog_description">Это нужно для урока</string>
+    <string name="alert_rationable_dialog_positive_button">Выдать</string>
+    <string name="alert_rationable_dialog_negative_button">Отказать</string>
+    <string name="alert_dialog_negative_button">Закрыть</string>
+    <string name="alert_dialog_check_permissions_result_title">Нет доступа к геолокации</string>
+    <string name="alert_dialog_check_permissions_result_description">Выдайте доступ для использования како-то функции</string>
 </resources>
