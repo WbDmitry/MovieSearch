@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.wbdmitry.moviesearch.databinding.ActivityMainBinding
 import com.wbdmitry.moviesearch.ui.main.history.HistoryFragment
+import com.wbdmitry.moviesearch.ui.main.mapMovieTheaters.MapsMovieTheaterFragment
 import com.wbdmitry.moviesearch.ui.main.movielist.MovieListFragment
 import com.wbdmitry.moviesearch.ui.main.sittings.SettingsFragment
 
@@ -66,6 +67,9 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.movie_list -> {
                 openFragment(MovieListFragment.newInstance())
+            }
+            R.id.find_movie_theater -> {
+                openFragment(MapsMovieTheaterFragment.newInstance())
             }
             R.id.history_movie_list -> {
                 openFragment(HistoryFragment.newInstance())

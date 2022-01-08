@@ -5,11 +5,18 @@
         android:icon="@drawable/ic_baseline_movie_24"
         android:orderInCategory="10"
         android:title="@string/movie" />
+
     <item
         android:id="@+id/history_movie_list"
         android:icon="@drawable/ic_baseline_history_edu_24"
         android:orderInCategory="15"
         android:title="@string/history" />
+
+    <item
+        android:id="@+id/find_movie_theater"
+        android:icon="@drawable/ic_baseline_map_24"
+        android:orderInCategory="16"
+        android:title="@string/find_movie_theater" />
 
     <item
         android:id="@+id/setting_movie_list"
