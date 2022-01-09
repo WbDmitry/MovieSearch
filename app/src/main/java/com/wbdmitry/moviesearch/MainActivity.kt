@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val receiver = MainBroadcastReceiver()
     private val intentMyIntentService by lazy { Intent(this, MyIntentService::class.java) }
-
+    val notification = Notification()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,6 +100,7 @@ class MainActivity : AppCompatActivity() {
                 ContextCompat.checkSelfPermission(it, Manifest.permission.ACCESS_FINE_LOCATION) ==
                         PackageManager.PERMISSION_GRANTED -> {
                     getLocation()
+
                 }
                 shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION) -> {
                     showRationaleDialog()
@@ -141,6 +142,11 @@ class MainActivity : AppCompatActivity() {
                 .create()
                 .show()
         }
+        notification.sendNotification(
+            this,
+            title,
+            message
+        )
     }
 
     override fun onRequestPermissionsResult(
