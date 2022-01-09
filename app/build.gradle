@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android-extensions'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -42,6 +43,8 @@ android {
 dependencies {
     //room
     implementation 'androidx.room:room-common:2.4.0'
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
     kapt 'androidx.room:room-compiler:2.4.0'
     implementation 'androidx.room:room-ktx:2.4.0'
 
@@ -66,4 +69,6 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
+
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
 }
