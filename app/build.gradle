@@ -31,7 +31,21 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        beta {
+            initWith debug
+            versionNameSuffix "-beta"
+            buildConfigField "String", "TYPE", '"BETA"'
+        }
+
+        debug {
+            versionNameSuffix "-debug"
+            buildConfigField "String", "TYPE", '"DEBUG"'
+        }
+
     }
+    flavorDimensions 'version'
+
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -44,6 +58,16 @@ android {
 
     buildFeatures {
         viewBinding true
+    }
+    productFlavors {
+        free {
+            dimension 'version'
+            applicationIdSuffix '.free'
+        }
+        paid {
+            dimension 'version'
+            applicationIdSuffix '.paid'
+        }
     }
 }
 
@@ -63,7 +87,7 @@ dependencies {
     implementation 'io.coil-kt:coil:1.4.0'
 
     //koin
-    implementation 'io.insert-koin:koin-android:3.1.4'
+    implementation 'io.insert-koin:koin-android:3.1.5'
 
     //coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-native-mt'
