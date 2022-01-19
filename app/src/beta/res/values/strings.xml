@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">movie search (beta)</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name_category">NameCategory</string>
+    <string name="name_movie">Название фильма</string>
+    <string name="description_movie">Описание фильма</string>
+    <string name="description_movie_empty">Lorem Ipsum - это те</string>
+    <string name="error">Запланированная ошибка, просто перезагрузи</string>
+    <string name="reload">Перезагрузить</string>
+    <string name="message_from_system">Сообщение от симтемы\n</string>
+    <string name="action">Действие:</string>
+    <string name="user_logged">(ENTER) The user has logged into the application -</string>
+    <string name="user_exit">(EXIT) The user has logged out of the application - </string>
+    <string name="show_adult_content">Показывать взрослый контент</string>
+    <string name="movie_list_settings">Настройки списка фильмов:</string>
+    <string name="setting">Настройки</string>
+    <string name="movie">Фильмы</string>
+    <string name="empty_date">13/02/2021</string>
+    <string name="history">История</string>
+    <string name="alert_dialog_title">Доступ к геолокации</string>
+    <string name="alert_dialog_description">Это нужно для урока</string>
+    <string name="alert_rationable_dialog_positive_button">Выдать</string>
+    <string name="alert_rationable_dialog_negative_button">Отказать</string>
+    <string name="alert_dialog_negative_button">Закрыть</string>
+    <string name="alert_dialog_check_permissions_result_title">Нет доступа к геолокации</string>
+    <string name="alert_dialog_check_permissions_result_description">Выдайте доступ для использования како-то функции</string>
+    <string name="find_movie_theater">Найти кинотеатр</string>
+</resources>
