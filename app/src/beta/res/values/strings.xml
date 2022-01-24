@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">movie search</string>
+    <string name="app_name">movie search (beta)</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="name_category">NameCategory</string>
     <string name="name_movie">Название фильма</string>

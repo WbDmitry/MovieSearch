@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_16">16dp</dimen>
+    <dimen name="text_size_21">21sp</dimen>
+    <dimen name="corner_radius_5">5dp</dimen>
+    <dimen name="margin_5">5dp</dimen>
+    <dimen name="text_size_18">18sp</dimen>
+    <dimen name="width_poster_item_movie">100dp</dimen>
+    <dimen name="height_poster_item_movie">140dp</dimen>
+    <dimen name="text_size_14">14sp</dimen>
+    <dimen name="padding_16">16dp</dimen>
+</resources>
